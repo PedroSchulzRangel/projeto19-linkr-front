@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SigIn from "./SigInPage.js/SigInPage";
+
 import { AuthProvider } from "./contexts/AuthContext";
 
 export default function App() {
@@ -7,7 +9,8 @@ export default function App() {
     <AuthProvider>
       <Content>
         <BrowserRouter>
-          <Routes>
+          <Routes> 
+          <Route path="/" element={<SigIn/>}/>
           </Routes>
         </BrowserRouter>
       </Content>
