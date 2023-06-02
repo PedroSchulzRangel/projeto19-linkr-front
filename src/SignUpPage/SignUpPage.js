@@ -19,7 +19,7 @@ export default function SignUpPage(){
                 <input placeholder="picture url" type="text" required/><br/>
                 <SubmitButton type="submit">Sign Up</SubmitButton>
             </form>
-            <Link><SwitchPage>Switch back to log in</SwitchPage></Link>
+            <Link to="/"><SwitchPage>Switch back to log in</SwitchPage></Link>
         </RightContainer> 
     </PageContainer>
     )

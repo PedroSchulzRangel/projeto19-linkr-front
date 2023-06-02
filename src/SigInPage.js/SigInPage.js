@@ -42,7 +42,7 @@ export default function SigIn() {
                 </input>
 
                 <button onClick={sendForm}>Log In</button>
-                <Link>
+                <Link to="/sign-up">
                     <RouteToSignUp>
                         First time? Create an account!
                     </RouteToSignUp>
