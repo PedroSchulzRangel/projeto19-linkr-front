@@ -1,23 +1,83 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
 export default function SignUpPage(){
+
+const [form, setForm] = useState({email: "", password: "", username: "", pictureUrl: ""});
+const [disabled, setDisabled] = useState(false);
+const navigate = useNavigate();
+
+function handleForm(e){
+    setForm({...form, [e.target.name]: e.target.value});
+  }
+
+function SubmitUserRegistry(e){
+    
+    e.preventDefault();
+
+    if(!form.email || !form.password || !form.username || !form.pictureUrl){
+        
+        alert("Preencha todos os campos para poder prosseguir com o cadastro");
+        return;
+    }
+
+    setDisabled(true);
+
+    axios.post(`${process.env.REACT_APP_BASE_URL}/sign-up`,form)
+    .then((res) =>{
+        console.log(res.data);
+        setDisabled(false);
+        navigate("/");
+    })
+    .catch((error) => {
+        alert(error.response.data);
+        setDisabled(false);
+    });
+}
     return (
     <PageContainer>
-       <LeftContainer>
+       < LeftContainer>
         <h1>Linkr</h1>
         <h2>save, share and discover<br/>
             the best links on the web</h2>
         </LeftContainer>
         <RightContainer>
-            <form>
-                <input placeholder="e-mail" type="email" required/><br/>
-                <input placeholder="password" type="password" required/><br/>
-                <input placeholder="username" type="text" required/><br/>
-                <input placeholder="picture url" type="text" required/><br/>
-                <SubmitButton type="submit">Sign Up</SubmitButton>
+            <form onSubmit={SubmitUserRegistry}>
+                <input
+                placeholder="e-mail"
+                name="email"
+                value={form.email}
+                onChange={handleForm}
+                type="email"
+                disabled={disabled}
+                required/><br/>
+                <input
+                placeholder="password"
+                name="password"
+                value={form.password}
+                onChange={handleForm}
+                type="password"
+                disabled={disabled}
+                required/><br/>
+                <input
+                placeholder="username"
+                name="username"
+                value={form.username}
+                onChange={handleForm}
+                type="text"
+                disabled={disabled}
+                required/><br/>
+                <input
+                placeholder="picture url"
+                name="pictureUrl"
+                value={form.pictureUrl}
+                onChange={handleForm}
+                type="text"
+                disabled={disabled}
+                required/><br/>
+                <SubmitButton type="submit" disabled={disabled}>Sign Up</SubmitButton>
             </form>
             <Link to="/"><SwitchPage>Switch back to log in</SwitchPage></Link>
         </RightContainer> 
