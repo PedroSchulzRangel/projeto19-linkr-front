@@ -41,16 +41,16 @@ export default function SigIn() {
             <Form>
                 <input placeholder="e-mail" type={"email"}
                     name={"email"} value={form.email}
-                    onChange={handleForm}>
+                    onChange={handleForm}  data-test="email">
                 </input>
                 <input placeholder="password" type={"password"}
                     name={"password"} value={form.password}
-                    onChange={handleForm}>
+                    onChange={handleForm}  data-test="password">
                 </input>
 
-                <button onClick={sendForm} disabled={isDisabled}>Log In</button>
+                <button onClick={sendForm} disabled={isDisabled}  data-test="login-btn">Log In</button>
                 <Link to={"/sign-up"}>
-                    <RouteToSignUp>
+                    <RouteToSignUp data-test="sign-up-link">
                         First time? Create an account!
                     </RouteToSignUp>
                 </Link>
