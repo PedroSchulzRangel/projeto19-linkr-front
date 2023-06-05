@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import axios from "axios";
 import { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "./contexts/AuthContext"
@@ -16,7 +17,7 @@ export default function Navbar() {
         const newAuth = { undefined }
         login(newAuth)
         const form={token:userInfo.token}
-        axios.delete(`${process.env.REACT_APP_BASE_URL}/delete-session`,form)
+        axios.delete(`${process.env.REACT_APP_BASE_URL}/delete-session/${userInfo.id}`,form)
         .then((res)=>{
             setTimeout(navigate("/"), 100)
         })
