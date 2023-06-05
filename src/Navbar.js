@@ -15,7 +15,16 @@ export default function Navbar() {
     function Logout() {
         const newAuth = { undefined }
         login(newAuth)
-        setTimeout(navigate("/"), 100)
+        const form={token:userInfo.token}
+        axios.delete(`${process.env.REACT_APP_BASE_URL}/delete-session`,form)
+        .then((res)=>{
+            setTimeout(navigate("/"), 100)
+        })
+        .catch((error)=>{
+            alert(error.response.data);
+        })
+
+        
     }
 
     function handleClick() {
@@ -41,11 +50,11 @@ export default function Navbar() {
                 <div className="title">linkr</div>
                 <div onClick={() => setIsMenuOpen(!isMenuOpen)} ref={refOne} className="user-items" >
                     <img className={isMenuOpen ? "menu-icon-open" : "menu-icon"} src="https://icons.veryicon.com/png/o/miscellaneous/simple-and-round-line-mark/down-arrow-56.png" alt="show menu" />
-                    <img className="user-icon" src="https://cdn-icons-png.flaticon.com/512/552/552721.png" alt="harold pain" />
+                    <img data-test="avatar" className="user-icon" src={userInfo ? `${userInfo.pictureUrl}`:"https://cdn-icons-png.flaticon.com/512/552/552721.png"} alt={userInfo ? `${userInfo.username}`:"anon"} />
                 </div>
             </header>
-            <div ref={refTwo} className={isMenuOpen ? "logout-items-open" : ""}>
-                <div>Logout</div>
+            <div  data-test="menu" ref={refTwo} className={isMenuOpen ? "logout-items-open" : ""}>
+                <div data-test="logout">Logout</div>
             </div>
         </Content>
     );
