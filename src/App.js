@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SigIn from "./SigInPage.js/SigInPage";
+import SigIn from "./SigInPage/SigInPage";
 import SignUpPage from "./SignUpPage/SignUpPage";
 import TimeLine from "./TimelinePage/TimeLinePage";
 
@@ -10,7 +10,6 @@ export default function App() {
   return (
 
     <AuthProvider>
-      <Content>
         <BrowserRouter>
           <Routes> 
           <Route path="/" element={<SigIn/>}/>
@@ -18,7 +17,6 @@ export default function App() {
           <Route path="/timeline" element={<TimeLine />} />
           </Routes>
         </BrowserRouter>
-      </Content>
     </AuthProvider>
   );
 }
