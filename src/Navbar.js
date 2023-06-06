@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "./contexts/AuthContext"
-import axios from "axios"
+
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);

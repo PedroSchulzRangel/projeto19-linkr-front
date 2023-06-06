@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-export default function SigIn() {
+export default function SignIn() {
 
     const navigate = useNavigate()
 
