@@ -17,7 +17,7 @@ export default function SignIn() {
     function sendForm(e) {
         e.preventDefault()
         setIsDisabled(true)
-        axios.post(``, form)
+        axios.post(`${process.env.REACT_APP_BASE_URL}/`, form)
             .then(answer => {
                 setIsDisabled(false)
 
