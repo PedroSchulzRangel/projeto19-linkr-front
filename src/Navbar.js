@@ -13,16 +13,19 @@ export default function Navbar() {
     if (isMenuOpen) {
         handleClick()
     }
-    function Logout() {
+    function Logout() {        
+        const config={
+            headers:{Autorization:`Bearer ${userInfo.token}`}
+        }
         const newAuth = { undefined }
         login(newAuth)
-        const form={token:userInfo.token}
-        axios.delete(`${process.env.REACT_APP_BASE_URL}/delete-session/${userInfo.id}`,form)
+        axios.delete(`${process.env.REACT_APP_BASE_URL}/delete-session`,{},config)
         .then((res)=>{
             setTimeout(navigate("/"), 100)
         })
         .catch((error)=>{
-            alert(error.response.data);
+            alert("You need to sign in");
+            setTimeout(navigate("/"), 100)
         })
 
         
@@ -51,7 +54,7 @@ export default function Navbar() {
                 <div className="title">linkr</div>
                 <div onClick={() => setIsMenuOpen(!isMenuOpen)} ref={refOne} className="user-items" >
                     <img className={isMenuOpen ? "menu-icon-open" : "menu-icon"} src="https://icons.veryicon.com/png/o/miscellaneous/simple-and-round-line-mark/down-arrow-56.png" alt="show menu" />
-                    <img data-test="avatar" className="user-icon" src={userInfo ? `${userInfo.pictureUrl}`:"https://cdn-icons-png.flaticon.com/512/552/552721.png"} alt={userInfo ? `${userInfo.username}`:"anon"} />
+                    <img data-test="avatar" className="user-icon" src={userInfo ? `${userInfo.pictureUrl}`:"https://cdn-icons-png.flaticon.com/512/552/552721.png"} alt={userInfo.name ? `${userInfo.username}`:"user"} />
                 </div>
             </header>
             <div  data-test="menu" ref={refTwo} className={isMenuOpen ? "logout-items-open" : ""}>
