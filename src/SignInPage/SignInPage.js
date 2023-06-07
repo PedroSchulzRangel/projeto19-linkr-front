@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-export default function SigIn() {
+export default function SignIn() {
 
     const navigate = useNavigate()
 
@@ -17,7 +17,7 @@ export default function SigIn() {
     function sendForm(e) {
         e.preventDefault()
         setIsDisabled(true)
-        axios.post(``, form)
+        axios.post(`${process.env.REACT_APP_BASE_URL}/`, form)
             .then(answer => {
                 setIsDisabled(false)
 
@@ -41,16 +41,16 @@ export default function SigIn() {
             <Form>
                 <input placeholder="e-mail" type={"email"}
                     name={"email"} value={form.email}
-                    onChange={handleForm}>
+                    onChange={handleForm}  data-test="email">
                 </input>
                 <input placeholder="password" type={"password"}
                     name={"password"} value={form.password}
-                    onChange={handleForm}>
+                    onChange={handleForm}  data-test="password">
                 </input>
 
-                <button onClick={sendForm} disabled={isDisabled}>Log In</button>
+                <button onClick={sendForm} disabled={isDisabled}  data-test="login-btn">Log In</button>
                 <Link to={"/sign-up"}>
-                    <RouteToSignUp>
+                    <RouteToSignUp data-test="sign-up-link">
                         First time? Create an account!
                     </RouteToSignUp>
                 </Link>

@@ -1,8 +1,18 @@
 import styled from "styled-components";
+import Navbar from "../Navbar";
+import { useEffect } from "react";
+import PostModel from "./PostModel";
+
 
 export default function TimeLine() {
+
+    useEffect(() => {
+
+    }, [])
+
     return (
         <MainContainer>
+            <Navbar />
             <Title>
                 <h1>timeline</h1>
             </Title>
@@ -11,10 +21,12 @@ export default function TimeLine() {
                     <img>
                     </img>
                     <h1></h1>
-                    <input></input>
-                    <input></input>
+                    <input placeholder=""></input>
+                    <input placeholder=""></input>
+                    <button> Publish</button>
                 </TimelineForm>
             </CreatePost>
+            <PostModel/>
         </MainContainer>
     )
 }
@@ -51,5 +63,17 @@ border-radius: 16px;
 const TimelineForm = styled.form`
 input:first-child{
 height:30px;
+}
+
+button{
+    background: #1877F2;
+    border-radius: 5px;
+    width: 112px;
+    height: 31px;
+    border: transparent;
+
+    color: #FFFFFF;
+    font-family: 'Lato';
+    font-size: 14px;
 }
 `
