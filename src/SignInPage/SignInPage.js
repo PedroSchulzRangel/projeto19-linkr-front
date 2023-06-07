@@ -1,11 +1,14 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-export default function SigIn() {
+export default function SignIn() {
+
+    const navigate = useNavigate()
 
     const [form, setForm] = useState({ email: "", password: "" })
+    const [isDisabled, setIsDisabled] = useState(false)
 
     function handleForm(e) {
         setForm({ ...form, [e.target.name]: e.target.value })
@@ -13,8 +16,12 @@ export default function SigIn() {
 
     function sendForm(e) {
         e.preventDefault()
-        axios.post(``, form)
-            .then(answer =>console.log("ok"))
+        setIsDisabled(true)
+        axios.post(`${process.env.REACT_APP_BASE_URL}/`, form)
+            .then(answer => {
+                setIsDisabled(false)
+
+                navigate("/timeline")})
             .catch((err) => {
                 alert(err.response.data.message)
                 setForm({ email: "", password: "" })
@@ -34,16 +41,16 @@ export default function SigIn() {
             <Form>
                 <input placeholder="e-mail" type={"email"}
                     name={"email"} value={form.email}
-                    onChange={handleForm}>
+                    onChange={handleForm}  data-test="email">
                 </input>
                 <input placeholder="password" type={"password"}
                     name={"password"} value={form.password}
-                    onChange={handleForm}>
+                    onChange={handleForm}  data-test="password">
                 </input>
 
-                <button onClick={sendForm}>Log In</button>
-                <Link>
-                    <RouteToSignUp>
+                <button onClick={sendForm} disabled={isDisabled}  data-test="login-btn">Log In</button>
+                <Link to={"/sign-up"}>
+                    <RouteToSignUp data-test="sign-up-link">
                         First time? Create an account!
                     </RouteToSignUp>
                 </Link>
@@ -61,9 +68,9 @@ background-color:#151515;
 color: #FFFFFF;
 display:flex;
 flex-direction:column;
-align-items:center;
-justify-content: center;
 div{
+    margin-top:301px;
+    margin-left:144px;
     width:422px;
 }
 h1{
@@ -87,6 +94,10 @@ input{
    width: 429px;
    border-radius: 6px;
    margin-bottom: 13px;
+
+   font-size:27px;
+   font-family: 'Oswald';
+   padding: 12px 17px ;
 }
 button{
     width: 429px;

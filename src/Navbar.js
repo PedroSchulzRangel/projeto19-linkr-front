@@ -1,56 +1,71 @@
 import styled from "styled-components";
-import { useState,useEffect,useRef } from "react";
+import axios from "axios";
+import { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-export default function Navbar() {    
-    const [isMenuOpen,setIsMenuOpen]=useState(false);
-    
-    const navigate=useNavigate()
-    const refOne=useRef(null)
-    const refTwo=useRef(null)
-        if(isMenuOpen){
+import AuthContext from "./contexts/AuthContext"
+
+
+export default function Navbar() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { auth, login } = useContext(AuthContext)
+    const [userInfo, setUserInfo] = useState(auth)
+    const navigate = useNavigate()
+    const refOne = useRef(null)
+    const refTwo = useRef(null)
+    if (isMenuOpen) {
         handleClick()
-       
     }
-    function Logout(){
-        navigate("/")                 
-    }
+    function Logout() {
+        const newAuth = { undefined }
+        login(newAuth)
+        const form={token:userInfo.token}
+        axios.delete(`${process.env.REACT_APP_BASE_URL}/delete-session/${userInfo.id}`,form)
+        .then((res)=>{
+            setTimeout(navigate("/"), 100)
+        })
+        .catch((error)=>{
+            alert(error.response.data);
+        })
 
-    function handleClick(){
-        const handleClick=(e)=>{
-            if(refOne.current.contains(e.target)){
-                               
-            }
-            else if(refTwo.current.contains(e.target)){                
-                setTimeout(Logout,100)
-            }
-            else{
-                setIsMenuOpen(!isMenuOpen)                
-            }
-         }
-        document.addEventListener("click",handleClick)
+        
     }
 
-    
+    function handleClick() {
+        const handleClick = (e) => {
+            if (refOne.current.contains(e.target)) {
 
-  return (
-   <Content>
-   <header>
-    <div className="title">Linkr</div>
-    <div onClick={()=>setIsMenuOpen(!isMenuOpen)} ref={refOne}className="user-items" >
-    <img  className={isMenuOpen?"menu-icon-open":"menu-icon"} src="https://icons.veryicon.com/png/o/miscellaneous/simple-and-round-line-mark/down-arrow-56.png" alt="show menu"/>
-    <img  className="user-icon" src="https://cdn-icons-png.flaticon.com/512/552/552721.png" alt="harold pain"/>
-    </div>
-   </header>
-    <div  className={isMenuOpen ?"logout-items-open" :"" }>
-        <div ref={refTwo}>Logout</div>
-    </div>
-   </Content>
-  );
+            }
+            else if (refTwo.current.contains(e.target)) {
+                setTimeout(Logout, 100)
+            }
+            else {
+                setIsMenuOpen(!isMenuOpen)
+            }
+        }
+        document.addEventListener("click", handleClick)
+    }
+
+
+
+    return (
+        <Content>
+            <header>
+                <div className="title">linkr</div>
+                <div onClick={() => setIsMenuOpen(!isMenuOpen)} ref={refOne} className="user-items" >
+                    <img className={isMenuOpen ? "menu-icon-open" : "menu-icon"} src="https://icons.veryicon.com/png/o/miscellaneous/simple-and-round-line-mark/down-arrow-56.png" alt="show menu" />
+                    <img data-test="avatar" className="user-icon" src={userInfo ? `${userInfo.pictureUrl}`:"https://cdn-icons-png.flaticon.com/512/552/552721.png"} alt={userInfo ? `${userInfo.username}`:"anon"} />
+                </div>
+            </header>
+            <div  data-test="menu" ref={refTwo} className={isMenuOpen ? "logout-items-open" : ""}>
+                <div data-test="logout">Logout</div>
+            </div>
+        </Content>
+    );
 }
 
 
 
-const Content= styled.div`
+const Content = styled.div`
 
 header{
     position: fixed;
@@ -67,6 +82,9 @@ header{
     align-items: center;
     color: white;
     margin-left:10px ;
+    font-family: 'Passion One', cursive;
+    font-weight: 700;
+    font-size: 4vh;
 }
 .user-items{
     height: 8vh;
@@ -101,6 +119,9 @@ header{
     background-color: #151515;
     color: white;
     border-bottom-left-radius: 10px;
+    font-family: 'Passion One', cursive;
+    font-size: 400;
+    font-size: 80%;
 }
 `
 
