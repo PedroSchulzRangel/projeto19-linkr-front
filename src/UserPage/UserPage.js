@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {useParams} from "react-router-dom";
 import {useState, useEffect, useContext} from "react";
 import AuthContext from "../contexts/AuthContext";
+import axios from "axios";
 
 export default function UserPage(){
 
