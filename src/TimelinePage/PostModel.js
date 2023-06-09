@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useState } from "react";
 
-export default function PostModel() {
+export default function PostModel({userId, linkUrl}) {
+
     const [liked, setLiked] = useState(false)
+
     return (
         <Post>
             <PictureAndLikes>
@@ -13,24 +15,27 @@ export default function PostModel() {
 
                 {(liked === false) &&
                     <div>
-                        < AiOutlineHeart style={{ color: "#FFFFFF" }} size={"1.5em"} 
-                        onClick={()=>setLiked(!liked)} />
+                        < AiOutlineHeart style={{ color: "#FFFFFF" }} size={"1.5em"}
+                            onClick={() => setLiked(!liked)} />
                         <p>13 likes</p>
                     </div>}
                 {(liked !== false) &&
                     <div>
-                        < AiFillHeart style={{ color: "#AC0000" }} size={"1.5em"} 
-                        onClick={()=>setLiked(!liked)}/>
+                        < AiFillHeart style={{ color: "#AC0000" }} size={"1.5em"}
+                            onClick={() => setLiked(!liked)} />
                         <p>13 likes</p>
                     </div>}
 
             </PictureAndLikes>
             <PostInfos>
+                <Link to={`/user/${userId}`} style={{textDecoration:'none', color:"#FFFFFF"}}>
                 <h1>Username</h1>
+                </Link>
                 <p>
                     description
                 </p>
-                <Link style={{ textDecoration: "none" }}>
+                <a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer"
+                    style={{ textDecoration: "none" }}>
                     <LinkInfos>
                         <div>
                             <h1>link lalala</h1>
@@ -41,7 +46,7 @@ export default function PostModel() {
                         <img></img>
 
                     </LinkInfos>
-                </Link>
+                </a>
             </PostInfos>
         </Post>
     )
