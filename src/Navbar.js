@@ -56,7 +56,7 @@ export default function Navbar() {
                 <div className="title">linkr</div>
                 <div onClick={() => setIsMenuOpen(!isMenuOpen)} ref={refOne} className="user-items" >
                     <img className={isMenuOpen ? "menu-icon-open" : "menu-icon"} src="https://icons.veryicon.com/png/o/miscellaneous/simple-and-round-line-mark/down-arrow-56.png" alt="show menu" />
-                    <img data-test="avatar" className="user-icon" src={userInfo ? `${userInfo.pictureUrl}`:"https://cdn-icons-png.flaticon.com/512/552/552721.png"} alt={userInfo.name ? `${userInfo.username}`:"user"} />
+                    <img data-test="avatar" className="user-icon" src={userInfo ? `${userInfo.pictureUrl}`:"https://cdn-icons-png.flaticon.com/512/552/552721.png"} alt="user" />
                 </div>
             </header>
             <div  data-test="menu" ref={refTwo} className={isMenuOpen ? "logout-items-open" : ""}>
