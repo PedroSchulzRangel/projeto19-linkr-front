@@ -16,14 +16,17 @@ export default function SignIn() {
 
     function sendForm(e) {
         e.preventDefault()
+        console.log(form)
         setIsDisabled(true)
         axios.post(`${process.env.REACT_APP_BASE_URL}/`, form)
-            .then(answer => {
+            .then((answer) => {
                 setIsDisabled(false)
-
-                navigate("/timeline")})
+                console.log(answer)
+                navigate("/timeline")
+            })
             .catch((err) => {
-                alert(err.response.data.message)
+                alert(err.response.data)
+                setIsDisabled(false)
                 setForm({ email: "", password: "" })
             })
     }
@@ -41,14 +44,14 @@ export default function SignIn() {
             <Form>
                 <input placeholder="e-mail" type={"email"}
                     name={"email"} value={form.email}
-                    onChange={handleForm}  data-test="email">
+                    onChange={handleForm} data-test="email">
                 </input>
                 <input placeholder="password" type={"password"}
                     name={"password"} value={form.password}
-                    onChange={handleForm}  data-test="password">
+                    onChange={handleForm} data-test="password">
                 </input>
 
-                <button onClick={sendForm} disabled={isDisabled}  data-test="login-btn">Log In</button>
+                <button onClick={sendForm} disabled={isDisabled} data-test="login-btn">Log In</button>
                 <Link to={"/sign-up"}>
                     <RouteToSignUp data-test="sign-up-link">
                         First time? Create an account!
@@ -114,7 +117,7 @@ button{
 
 `
 
-const RouteToSignUp = styled.a`
+const RouteToSignUp = styled.p`
 font-family: 'Lato';
 color:#FFFFFF;
 text-decoration: underline #FFFFFF;

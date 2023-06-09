@@ -1,13 +1,21 @@
 import styled from "styled-components";
 import Navbar from "../Navbar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PostModel from "./PostModel";
+import axios from "axios";
 
 
 export default function TimeLine() {
 
+    const [posts, setPosts] = useState([])
     useEffect(() => {
+        axios.get(`${process.env.REACT_APP_BASE_URL}/timeline`)
+            .then((answer) => {
+                setPosts(answer.data)
 
+            }).catch((err) => {
+                console.log(err.response.data)
+            })
     }, [])
 
     return (
@@ -26,7 +34,9 @@ export default function TimeLine() {
                     <button> Publish</button>
                 </TimelineForm>
             </CreatePost>
-            <PostModel/>
+            {(posts.length === 0) && <p>loading...</p>}
+            {(posts.length !== 0) && posts.map(m => <PostModel key={m.id} userId={m.userId}
+            linkUrl={m.linkUrl} />)}
         </MainContainer>
     )
 }
