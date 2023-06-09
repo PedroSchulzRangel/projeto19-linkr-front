@@ -3,38 +3,38 @@ import { Link } from "react-router-dom";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useState } from "react";
 
-export default function PostModel({userId, linkUrl}) {
+export default function PostModel({userId, linkUrl, pictureUrl, name, description, likes}) {
 
     const [liked, setLiked] = useState(false)
 
     return (
         <Post>
             <PictureAndLikes>
-                <UserImg>
+                <UserImg src={pictureUrl}>
                 </UserImg>
 
                 {(liked === false) &&
                     <div>
                         < AiOutlineHeart style={{ color: "#FFFFFF" }} size={"1.5em"}
                             onClick={() => setLiked(!liked)} />
-                        <p>13 likes</p>
+                        <p>{likes} likes</p>
                     </div>}
                 {(liked !== false) &&
                     <div>
                         < AiFillHeart style={{ color: "#AC0000" }} size={"1.5em"}
                             onClick={() => setLiked(!liked)} />
-                        <p>13 likes</p>
+                        <p>{likes+1} likes</p>
                     </div>}
 
             </PictureAndLikes>
             <PostInfos>
                 <Link to={`/user/${userId}`} style={{textDecoration:'none', color:"#FFFFFF"}}>
-                <h1>Username</h1>
+                <h1>{name}</h1>
                 </Link>
                 <p>
-                    description
+                    {description}
                 </p>
-                <a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer"
+                <a href={linkUrl} target="_blank" rel="noopener noreferrer"
                     style={{ textDecoration: "none" }}>
                     <LinkInfos>
                         <div>

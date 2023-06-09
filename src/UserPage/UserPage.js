@@ -1,16 +1,44 @@
 import PostModel from "../TimelinePage/PostModel";
 import Navbar from "../Navbar";
 import styled from "styled-components";
+import {useParams} from "react-router-dom";
+import {useState, useEffect, useContext} from "react";
+import AuthContext from "../contexts/AuthContext";
 
 export default function UserPage(){
+
+const [posts, setPosts] = useState([]);
+const {id} = useParams();
+const { auth, login } = useContext(AuthContext);
+
+const config={
+    headers:{Autorization:`Bearer ${auth.token}`}
+}
+
+useEffect(() => {
+    axios.get(`${process.env.REACT_APP_BASE_URL}/user/${id}`, config)
+        .then((response) => {
+            console.log(response.data);
+            setPosts(response.data);
+        })
+        .catch((error) => alert(error.response.data));
+},[])
     return (
         <MainContainer>
             <Navbar/>
             <Title>
-                <img alt="profile"></img>
-                <h1>Juvenal Juvêncio's posts</h1>
+                <img src={posts? posts[0].pictureUrl : ""} alt="profile"></img>
+                <h1>{posts ? `${posts[0].username}'s posts` : ""}</h1>
             </Title>
-            <PostModel/>
+            {(posts.length === 0) && <p>loading...</p>}
+            {(posts.length !== 0) && posts.map((p,index) =>
+                <PostModel
+                key={index}
+                pictureUrl={p.pictureUrl}
+                name={p.username}
+                description={p.description}
+                linkUrl={p.linkUrl}
+                likes={p.likes}/>)}
         </MainContainer>
     )
 }
