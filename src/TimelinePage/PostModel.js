@@ -29,7 +29,7 @@ export default function PostModel({userId, linkUrl, pictureUrl, name, descriptio
             </PictureAndLikes>
             <PostInfos>
                 <Link to={`/user/${userId}`} style={{textDecoration:'none', color:"#FFFFFF"}}>
-                <h1>{name}</h1>
+                <h1>username</h1>
                 </Link>
                 <p>
                     {description}

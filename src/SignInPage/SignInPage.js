@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
+import AuthContext from "../contexts/AuthContext";
 
 export default function SignIn() {
 
@@ -9,6 +10,7 @@ export default function SignIn() {
 
     const [form, setForm] = useState({ email: "", password: "" })
     const [isDisabled, setIsDisabled] = useState(false)
+    const {auth, login} = useContext(AuthContext);
 
     function handleForm(e) {
         setForm({ ...form, [e.target.name]: e.target.value })
@@ -22,6 +24,7 @@ export default function SignIn() {
             .then((answer) => {
                 setIsDisabled(false)
                 console.log(answer)
+                login(answer.data)
                 navigate("/timeline")
             })
             .catch((err) => {

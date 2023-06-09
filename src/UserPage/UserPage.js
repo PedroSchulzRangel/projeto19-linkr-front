@@ -10,11 +10,13 @@ export default function UserPage(){
 
 const [posts, setPosts] = useState([]);
 const {id} = useParams();
-const { auth, login } = useContext(AuthContext);
+const { auth } = useContext(AuthContext);
+
+console.log(auth);
 
 const config={
     headers:{Autorization:`Bearer ${auth.token}`}
-}
+} 
 
 useEffect(() => {
     axios.get(`${process.env.REACT_APP_BASE_URL}/user/${id}`, config)
@@ -28,8 +30,8 @@ useEffect(() => {
         <MainContainer>
             <Navbar/>
             <Title>
-                <img src={posts? posts[0].pictureUrl : ""} alt="profile"></img>
-                <h1>{posts ? `${posts[0].username}'s posts` : ""}</h1>
+                <img src={posts? posts[0]?.pictureUrl : ""} alt="profile"></img>
+                <h1>{posts ? `${posts[0]?.username}'s posts` : ""}</h1>
             </Title>
             {(posts.length === 0) && <p>loading...</p>}
             {(posts.length !== 0) && posts.map((p,index) =>
